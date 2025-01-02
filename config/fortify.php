@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'username' => 'email',
+    'username' => 'n_document',
 
     'email' => 'email',
 
@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'home' => '/dashboard',
+    'home' => '/admin',
 
     /*
     |--------------------------------------------------------------------------

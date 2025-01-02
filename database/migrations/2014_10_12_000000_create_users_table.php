@@ -14,7 +14,13 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('lastname');
+            $table->string('n_document')->unique();
+            $table->string('document_type');
+            $table->enum('status', ['activo','inactivo'])->default('activo');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('address');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -23,6 +29,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Fortify\Fortify;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
     }
 }
