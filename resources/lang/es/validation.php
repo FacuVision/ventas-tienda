@@ -148,7 +148,7 @@ return [
 
     // 'attributes' => [
     //     'siglas_edit' => 'Siglas',
-    //     'name_edit' => 'Nombre de Unidad Orgánica',
+    //     'name_edit' => 'Nombre de Categoría',
     //    ],
 
 ];

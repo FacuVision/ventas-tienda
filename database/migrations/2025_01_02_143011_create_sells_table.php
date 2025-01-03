@@ -12,8 +12,33 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sells', function (Blueprint $table) {
+
+
             $table->id();
-            $table->timestamps();
+            $table->string("description");
+
+            $table->enum('status', ['activo','inactivo'])->default('activo');
+
+            $table->unsignedBigInteger('job_id');
+            $table->foreign('job_id')
+            ->references('id')
+            ->on('jobs');
+
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')
+            ->references('id')
+            ->on('categories');
+
+            $table->unsignedBigInteger('payment_type_id');
+            $table->foreign('payment_type_id')
+            ->references('id')
+            ->on('payment_types');
+
+            $table->string("observations");
+
+            $table->timestamps(); //incluye la fecha de creacion y la fecha de actualizacion
+
+
         });
     }
 

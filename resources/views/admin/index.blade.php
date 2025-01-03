@@ -15,12 +15,12 @@
         <div class="card-body">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
                 <div class="col">
-                    <a href="{{ route('admin.index') }}">
+                    <a href="{{ route('admin.categories.index') }}">
 
                         <div class="info-box bg-info shadow-on-hover">
                             <span class="info-box-icon"><i class="fas fa-user-plus"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">Usuarios</span>
+                                <span class="info-box-text">Categorias</span>
                                 <span class="info-box-number">registros</span>
                             </div>
                         </div>

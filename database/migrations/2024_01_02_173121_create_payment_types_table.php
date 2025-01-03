@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('job_controllers', function (Blueprint $table) {
+        Schema::create('payment_types', function (Blueprint $table) {
             $table->id();
+            $table->string("name");
+            $table->enum('modality', ['efectivo','transferencia'])->default('efectivo');
+            $table->enum('status', ['activo','inactivo'])->default('activo');
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('job_controllers');
+        Schema::dropIfExists('payment_types');
     }
 };

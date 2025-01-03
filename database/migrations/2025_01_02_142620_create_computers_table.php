@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('computers', function (Blueprint $table) {
             $table->id();
+            $table->string("name");
+            $table->string("detail");
+            $table->enum('status', ['activo','inactivo'])->default('activo');
             $table->timestamps();
         });
     }

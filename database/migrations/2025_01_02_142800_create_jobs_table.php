@@ -13,7 +13,26 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+
+            $table->enum('status', ['activo','inactivo'])->default('activo');
+            $table->enum('pay_status', ['pendiente','cancelado','con observaciones'])->default('pendiente');
+
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users');
+
+            $table->unsignedBigInteger('computer_id');
+
+            $table->foreign('computer_id')
+            ->references('id')
+            ->on('computers');
+
+            $table->string("observations");
+
+            $table->dateTime('end_datetime')->nullable(); //fecha en la que cierra la jornada
+            $table->timestamps(); //incluye la fecha de creacion y la fecha de actualizacion
         });
     }
 
