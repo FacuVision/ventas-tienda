@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -35,6 +36,8 @@ class User extends Authenticatable
         'password'
     ];
 
+
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -54,6 +57,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'theme_settings' => 'string' // Laravel manejará esto como JSON automáticamente
+
     ];
 
     /**
@@ -64,4 +69,18 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    protected $attributes = [
+        'theme_settings' => "primary"
+    ];
+
+    public function adminlte_image()
+    {
+        return auth()->user()->profile_photo_url;
+    }
+
+    public function adminlte_desc()
+    {
+        return "Usuario";
+    }
 }

@@ -26,6 +26,10 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+
+            $table->string('theme_settings')->default("primary");
+            $table->boolean('dark_mode')->default(true); // true: Modo oscuro por defecto
+
             $table->timestamps();
         });
     }
