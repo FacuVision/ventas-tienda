@@ -198,7 +198,7 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-dark navbar-dark',
+    'classes_topnav' => 'navbar-dark',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 

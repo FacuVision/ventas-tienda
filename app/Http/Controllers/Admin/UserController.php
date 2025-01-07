@@ -18,7 +18,13 @@ class UserController extends Controller
 
     public function update_config(Request $request, string $id)
     {
-        return response()->json(['message' => 'Datos recibidos', 'data' => $request->all()]);
+        $user = User::findOrFail($id);
+
+        $user->update([
+            "theme_settings" => $request->selectColor
+        ]);
+
+        return response()->json(['message' => 'Datos recibidos', 'data' => $user]);
     }
 
     /**

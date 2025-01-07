@@ -1,77 +1,80 @@
 <script>
     $(document).ready(function() {
-
-        //ESTE TOKEN CSRF LO SOLICITA LA LIBRERIA YAJRA PARA PODER HACER EL ENVIO DE LA
-        //PETICION Y LA RECEPCION DE LA MISMA
+        // Configurar el token CSRF requerido para las solicitudes AJAX
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
         });
 
+        // Inicializar el color y asignarlo al elemento correspondiente
+        const inicialColor = $("#color_profile").val();
+        const inicialColorSideBar = $("#sidebar").val();
+        actualizarMuestraColor(inicialColor);
 
+        // Establecer la opción seleccionada en el select
+        $("#selectColor").val(inicialColor).trigger("change");
 
-
-        //Para inicializar el color
-        var InicialColor = $("#primary").attr("id");
-        $("#muestraColor")
-            .removeClass() // Elimina todas las clases actuales
-            .addClass("p-4 bg-" + InicialColor); // Agrega la nueva clase basada en el valor
-
-        // Establecer la opción seleccionada
-        $("#selectColor").val(InicialColor).trigger('change');
-
-
-        //Para reducir el padding de las cards
+        // Reducir el padding de las cards para un diseño más compacto
         $(".card-footer").addClass("pb-0");
 
-
-        //Para cambiar el color segun el select
-        // Escucha el cambio en el select
+        // Cambiar el color de muestra al seleccionar una nueva opción
         $("#selectColor").change(function() {
-            // Obtén el valor seleccionado
-            var selectedColor = $(this).val();
-
-            // Cambia la clase del botón según el valor seleccionado
-            $("#muestraColor")
-                .removeClass() // Elimina todas las clases actuales
-                .addClass("p-4 bg-" + selectedColor); // Agrega la nueva clase basada en el valor
+            const selectedColor = $(this).val();
+            actualizarMuestraColor(selectedColor);
         });
 
-
-        $('#form_edit_config').on('submit', function(e) {
-
+        // Manejar el envío del formulario para actualizar configuración
+        $("#form_edit_config").on("submit", function(e) {
             e.preventDefault();
 
-            let formData = $(this).serialize();
-            let id = $("#user_id").val();
-
+            const formData = $(this).serialize();
+            const id = $("#user_id").val();
             $("#config_id").val(id);
 
-            // Verifica que el ID se asigna correctamente
-            console.log('ID Config:', $("#config_id").val());
-            console.log('Form Data:', formData);
+            // Verificar que los datos se asignan correctamente
+            // console.log("ID Config:", id);
+            // console.log("Form Data:", formData);
 
-
+            // Enviar solicitud AJAX
             $.ajax({
-                type: 'PUT',
+                type: "PUT",
                 url: '{{ url('admin/update_config', '') }}/' + id,
                 data: formData,
                 success: function(response) {
-                    // Manejar la respuesta del servidor (opcional)
-                    console.log(response);
-                    location.reload();
-
-
+                    //console.log("Respuesta del servidor:", response);
+                    Swal.fire({
+                        icon: "success",
+                        title: "Éxito",
+                        text: "La configuración se actualizó correctamente.",
+                    }).then(() => {
+                        location.reload(); // Recargar la página
+                    });
                 },
                 error: function(xhr) {
-
-                    console.error(xhr.responseText);
-
-                }
+                    console.error("Error en la solicitud:", xhr.responseText);
+                    manejarErrores(xhr);
+                },
             });
         });
 
+        // Función para actualizar la muestra de color
+        function actualizarMuestraColor(color) {
+            $("#muestraColor")
+                .attr("class", "") // Elimina todas las clases actuales
+                .addClass(`p-4 bg-${color}`); // Agrega la nueva clase
+        }
 
+        // Función para manejar errores
+        function manejarErrores(xhr) {
+            if (xhr.status === 422) {
+                const errores = xhr.responseJSON.errors;
+                const listaErrores = $("#lista-errores-categories-edit").empty();
+                $.each(errores, function(index, error) {
+                    listaErrores.append(`<li>${error}</li>`);
+                });
+                $("#alerta_edit_categories").show();
+            }
+        }
     });
 </script>

@@ -36,7 +36,7 @@
                                     <label for="config_name" class="form-label">Color</label>
                                     {{-- Minimal --}}
                                     <select class="form-control" name="selectColor" id="selectColor">
-                                        <option value="black">Negro</option>
+                                        <option value="orange">Naranja</option>
                                         <option value="red">Rojo</option>
                                         <option value="secondary">Gris</option>
                                         <option value="primary">Azul</option>

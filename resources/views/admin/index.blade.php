@@ -16,10 +16,11 @@
     <div class="row">
         <div class="col-lg-4 col-sm-12">
 
-            <x-adminlte-profile-widget name="{{ $user->name }} {{ $user->lastname }}" desc="Trabajador" theme="primary"
-                img="{{ $user->profile_photo_url }}" id="{{ $user->theme_settings }}">
+            <x-adminlte-profile-widget name="{{ $user->name }} {{ $user->lastname }}" desc="Trabajador" theme="{{config('app.theme_color')}}"
+                img="{{ $user->profile_photo_url }}" id="profile">
 
                 <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
+                <input type="hidden" name="color_profile" id="color_profile" value="{{config('app.theme_color')}}">
 
                 <table class="table table-compact">
                     <tbody>
@@ -52,7 +53,7 @@
         </div>
 
         <div class="col">
-            <div class="card">
+            <div class="card card-outline card-{{config('app.theme_color')}}">
                 <div class="card-body">
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3">
                         <div class="col">
@@ -149,8 +150,7 @@
 
 
 @push('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+
     <style>
         /* CSS */
         .shadow-on-hover {

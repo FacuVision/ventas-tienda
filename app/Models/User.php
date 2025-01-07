@@ -33,6 +33,7 @@ class User extends Authenticatable
         'phone',
         'address',
         'email',
+        'theme_settings',
         'password'
     ];
 

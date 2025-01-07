@@ -28,6 +28,9 @@
     @endif
 @stop
 
+<input type="hidden" name="sidebar" id="sidebar" value="{{config('app.theme_color')}}">
+
+
 {{-- Rename section content to content_body --}}
 
 @section('content')
@@ -41,7 +44,6 @@
         Version: {{ config('app.version', '1.0.0') }}
     </div>
 
-    {{-- <button id="changeColor">Cambiar Color</button> --}}
 
 
     <strong>
@@ -54,15 +56,24 @@
 {{-- Add common Javascript/Jquery code --}}
 
 @push('js')
-<script>
-    $(document).ready(function () {
-        // $("#changeColor").click(function () {
+    <script>
+        $(document).ready(function() {
+            $(document).ready(function() {
 
-        //     var clase_usuario = "sidebar-dark-success";
-        //     $(".main-sidebar").removeClass("sidebar-dark-primary").addClass(clase_usuario);
-        // });
-    });
-</script>
+                // Inicializar el color y asignarlo al elemento correspondiente
+                const inicialColorSideBar = $("#sidebar").val();
+                actualizarMuestraColorSideBar(inicialColorSideBar);
+
+                // Función para actualizar la muestra de color
+                function actualizarMuestraColorSideBar(color) {
+                    $(".main-sidebar").removeClass("sidebar-dark").addClass(
+                    `sidebar-dark-${color}`); // Agrega la nueva clase
+
+                }
+            });
+
+        });
+    </script>
 @endpush
 
 {{-- Add common CSS customizations --}}

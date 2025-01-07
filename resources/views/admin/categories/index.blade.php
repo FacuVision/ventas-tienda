@@ -12,7 +12,7 @@
     {{-- <p>Welcome to this beautiful admin panel.</p> --}}
 
     {{-- <p>Aqui puedes gestionar las distintas Unidades Orgánicas de la entidad</p> --}}
-    <div class="card card-outline card-primary">
+    <div class="card card-outline card-{{config('app.theme_color')}}">
         <div class="card-header text-center">
             <i class="fas fa-cubes"></i>
             <strong>
