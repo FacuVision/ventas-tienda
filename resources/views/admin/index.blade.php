@@ -16,11 +16,11 @@
     <div class="row">
         <div class="col-lg-4 col-sm-12">
 
-            <x-adminlte-profile-widget name="{{ $user->name }} {{ $user->lastname }}" desc="Trabajador" theme="{{config('app.theme_color')}}"
-                img="{{ $user->profile_photo_url }}" id="profile">
+            <x-adminlte-profile-widget name="{{ $user->name }} {{ $user->lastname }}" desc="{{ config('app.user_role')}}"
+                theme="{{ config('app.theme_color') }}" img="{{ $user->profile_photo_url }}" id="profile">
 
                 <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
-                <input type="hidden" name="color_profile" id="color_profile" value="{{config('app.theme_color')}}">
+                <input type="hidden" name="color_profile" id="color_profile" value="{{ config('app.theme_color') }}">
 
                 <table class="table table-compact">
                     <tbody>
@@ -35,6 +35,16 @@
                         <tr>
                             <th scope="row">Direccion</th>
                             <td>{{ $user->address }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Ultima sesion</th>
+                            <td> {{ date('d/m/Y H:i:s', strtotime($user->last_sesion))}}</td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row">Fecha de creacion</th>
+                            <td>{{ date('d/m/Y H:i:s', strtotime($user->created_at))}} </td>
+
                         </tr>
                         <tr>
                             <th scope="row">Cambiar color</th>
@@ -53,14 +63,17 @@
         </div>
 
         <div class="col">
-            <div class="card card-outline card-{{config('app.theme_color')}}">
+            <div class="card card-outline card-{{ config('app.theme_color') }}">
                 <div class="card-body">
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3">
                         <div class="col">
                             <a href="{{ route('admin.categories.index') }}">
 
                                 <div class="info-box bg-info shadow-on-hover">
-                                    <span class="info-box-icon"><i class="fas fa-user-plus"></i></span>
+
+                                    <span class="info-box-icon">
+                                        <i class="fas fa-cubes"></i>
+                                    </span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Categorias</span>
                                         <span class="info-box-number">registros</span>
@@ -69,13 +82,12 @@
                             </a>
                         </div>
                         <div class="col">
-                            <a href="{{ route('admin.index') }}">
+                            <a href="{{ route('admin.users.index') }}">
                                 <div class="info-box bg-primary shadow-on-hover">
-                                    <span class="info-box-icon">
-                                        <i class="fas fa-cubes"></i>
-                                    </span>
+                                    <span class="info-box-icon"><i class="fas fa-users"></i></span>
+
                                     <div class="info-box-content">
-                                        <span class="info-box-text">Unidades Orgánicas</span>
+                                        <span class="info-box-text">Usuarios</span>
                                         <span class="info-box-number">registros</span>
                                     </div>
                                 </div>
@@ -86,7 +98,7 @@
                                 <div class="info-box bg-olive shadow-on-hover ">
                                     <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
                                     <div class="info-box-content">
-                                        <span class="info-box-text">Proveedores</span>
+                                        <span class="info-box-text">Ventas</span>
                                         <span class="info-box-number">registros</span>
                                     </div>
                                 </div>
@@ -96,9 +108,9 @@
                         <div class="col">
                             <a href="{{ route('admin.index') }}">
                                 <div class="info-box bg-purple shadow-on-hover">
-                                    <span class="info-box-icon"><i class="fas fa-university"></i></span>
+                                    <span class="info-box-icon"><i class="fas fa-laptop"></i></span>
                                     <div class="info-box-content">
-                                        <span class="info-box-text">Tipos de Contrato</span>
+                                        <span class="info-box-text">Computadoras</span>
                                         <span class="info-box-number">registros</span>
                                     </div>
                                 </div>
@@ -109,7 +121,7 @@
                                 <div class="info-box bg-maroon shadow-on-hover">
                                     <span class="info-box-icon"><i class="fas fa-book"></i></span>
                                     <div class="info-box-content">
-                                        <span class="info-box-text">Tipos de Documentos</span>
+                                        <span class="info-box-text">Reportes</span>
                                         <span class="info-box-number">registros </span>
                                     </div>
                                 </div>
@@ -129,7 +141,7 @@
                             <div class="info-box bg-yellow shadow-on-hover ">
                                 <span class="info-box-icon"><i class="fas fa-solid fa-clipboard"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Comprobantes de pago</span>
+                                    <span class="info-box-text">Tipos de pagos</span>
                                     <span class="info-box-number">10 registros</span>
                                 </div>
                             </div>
@@ -150,7 +162,6 @@
 
 
 @push('css')
-
     <style>
         /* CSS */
         .shadow-on-hover {
@@ -168,5 +179,5 @@
 {{-- Push extra scripts --}}
 
 @push('js')
-    @include('admin.users.componentes.js_users_partials')
+    @include('admin.users.componentes.js_users_theme_partials')
 @endpush

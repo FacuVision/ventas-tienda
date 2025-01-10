@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,10 +13,12 @@ class SetUserTheme
         // Verificar si el usuario está autenticado
         if (Auth::check()) {
             // Obtener el campo `theme_settings` del usuario autenticado
-            $theme = Auth::user()->theme_settings;
+            $user = Auth::user();
 
             // Configurar un valor dinámico
-            config(['app.theme_color' => $theme]);
+            config(['app.theme_color' => $user->theme_settings]);
+            // Obtiene el primer rol, por lo general solo se utilizará un solo rol por usuario
+            config(['app.user_role' => $user->roles[0]->name_detail]);
         }
 
         // Continuar con la solicitud

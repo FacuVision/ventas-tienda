@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        $this->call(RoleSeeder::class);
 
         User::factory()->create([
             'name' => 'Emmanuel',
@@ -33,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'document_type' => 'DNI',
             'n_document' => '74741985',
             'lastname' => 'Garayar'
-        ]);
+        ])->assignRole("superadmin");
 
     }
 }

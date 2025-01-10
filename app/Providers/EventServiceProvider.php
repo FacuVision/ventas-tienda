@@ -10,9 +10,13 @@ use Illuminate\Support\Facades\Log;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 use JeroenNoten\LaravelAdminLte\Events\DarkModeWasToggled;
 use JeroenNoten\LaravelAdminLte\Events\ReadingDarkModePreference;
+use Illuminate\Auth\Events\Login;
+
 
 class EventServiceProvider extends ServiceProvider
 {
+
+
 
 
     /**
@@ -25,10 +29,27 @@ class EventServiceProvider extends ServiceProvider
         // Register listener for ReadingDarkModePreference event. We use this
         // event to setup dark mode initial status for AdminLTE package.
 
+
+        Event::listen(
+            Login::class,
+            function (Login $event) {
+                // Obtener el usuario autenticado
+                $user = $event->user;
+
+                $user_update = User::findOrFail($user->id);
+
+                // Actualizar el campo `last_sesion` con la fecha y hora actual
+                $user_update->update([
+                    'last_sesion' => now()
+                ]);
+            }
+        );
+
         Event::listen(
             ReadingDarkModePreference::class,
             [$this, 'handleReadingDarkModeEvt']
         );
+
 
         // Register listener for DarkModeWasToggled AdminLTE event.
 

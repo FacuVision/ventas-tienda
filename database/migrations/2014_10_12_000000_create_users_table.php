@@ -30,6 +30,8 @@ return new class extends Migration
             $table->string('theme_settings')->default("primary");
             $table->boolean('dark_mode')->default(true); // true: Modo oscuro por defecto
 
+            $table->timestamp('last_sesion')->nullable();
+
             $table->timestamps();
         });
     }

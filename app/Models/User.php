@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -18,6 +19,8 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+     // The User model requires this trait
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -34,6 +37,7 @@ class User extends Authenticatable
         'address',
         'email',
         'theme_settings',
+        'last_sesion',
         'password'
     ];
 
@@ -82,6 +86,6 @@ class User extends Authenticatable
 
     public function adminlte_desc()
     {
-        return "Usuario";
+        return config("app.user_role");
     }
 }

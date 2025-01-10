@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Ventas',
+    'title' => 'Tienda',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -135,7 +135,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-primary',
+    'usermenu_header_class' => '',
     'usermenu_image' => true,
     'usermenu_desc' => true,
     'usermenu_profile_url' => false,
@@ -314,6 +314,7 @@ return [
             'text' => 'Inicio',
             'route'  => 'admin.index',
             'icon' => 'fas fa-fw fa-home',
+            'can' => 'admin.index'
         ],
 
         ['header' => 'CONFIGRUACION DE LA CUENTA'],
@@ -321,12 +322,14 @@ return [
             'text' => 'Perfil',
             'url'  => '#',
             'icon' => 'fas fa-fw fa-user',
+            'can' => 'admin.index'
 
         ],
         [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
+            'can' => 'admin.index'
         ],
 
         ['header' => 'MANTENIMIENTO'],
@@ -338,12 +341,23 @@ return [
                 [
                     'text' => 'Categorias',
                     'route' => 'admin.categories.index',
-                    'icon_color' => 'red',
+                    'icon' => 'fas fa-cubes',
+                    'icon_color' => 'warning',
+                    'can' => 'admin.categories.index'
+                ],
+                [
+                    'text' => 'Usuarios',
+                    'route' => 'admin.users.index',
+                    'icon' => 'fas fa-users',
+                    'icon_color' => 'orange',
+                    'can' => 'admin.users.index'
 
                 ],
                 [
-                    'text' => 'level_one',
+                    'text' => 'Ventas',
                     'url' => '#',
+                    'icon' => 'fas fa-shopping-cart',
+                    'icon_color' => 'green'
                 ],
             ],
         ],

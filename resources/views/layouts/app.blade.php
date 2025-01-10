@@ -79,6 +79,5 @@
 {{-- Add common CSS customizations --}}
 
 @push('css')
-    {{-- <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"> <!-- Para favicon.ico --> --}}
     <link rel="icon" type="image/png" href="{{ asset('img/AdminLTELogo.png') }}"> <!-- Para favicon.png -->
 @endpush

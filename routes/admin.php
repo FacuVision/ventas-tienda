@@ -25,4 +25,6 @@ Route::resource('categories', CategoryController::class)->names('admin.categorie
 // Rutas para usuarios
 Route::resource('users', UserController::class)->names('admin.users');
     Route::put('update_config/{id}', [UserController::class, 'update_config'])->name('admin.users.update_config');
-    Route::get('listar_users', [UserController::class, 'listar_users'])->name('admin.users.listar_users');
+    Route::get('listar_usuarios', [UserController::class, 'listar_usuarios'])->name('admin.users.listar_usuarios');
+    Route::get("listar_roles", [UserController::class , "listar_roles"])->name("admin.users.listar_roles");
+    Route::get("ver_usuario/{id}", [UserController::class , "ver_usuario"])->name("admin.users.ver_usuario");
