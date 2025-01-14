@@ -331,42 +331,6 @@
     });
 
 
-    // ############################################################ Funcion ACtivar Unidad Orgánica
-
-    //usamos el evento on() porque estamos trabajando con elementos que son dinamicos y no
-    //fueron creados al momento de iniciar la página, por ello no usamos ".click(function()"
-
-    $("body").on("click", "#user_activate", function() {
-
-        var id = $(this).data('id');
-
-        // Función para mostrar la ventana modal de confirmación
-
-        // LOGICA DE ELIMINACION
-        $.ajax({
-            type: 'GET',
-            url: '{{ url('admin/users', '') }}/' + id,
-            success: function(response) {
-                // Manejar la respuesta del servidor (opcional)
-                Swal.fire(
-                    'Activada',
-                    'El elemento ha sido activado.',
-                    'success'
-                );
-                user_table.ajax.reload(); //recargar la tabla
-            },
-            error: function(xhr) {
-                // Manejar errores (opcional)
-                console.error(xhr.responseText);
-            }
-
-
-
-        });
-
-    });
-
-
     // ############################################################ Funcion mostrar detalles del usuario
 
     // Función para formatear fechas en formato dd-mm-yy H:m:s
@@ -450,7 +414,7 @@
 
         Swal.fire({
             title: "¿Estás seguro?",
-            text: "Si tu desactivas esta Unidad Orgánica, esta no podrá visualizarse en el menu de creacion de comprobantes",
+            text: "Si tu desactivas este usuario, esta no podrá acceder al sistema nuevamente",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -460,7 +424,6 @@
             if (result.isConfirmed) {
                 // Si el usuario hace clic en "Aceptar", ejecutamos la lógica de eliminación aquí
 
-                //console.log(id);
                 $.ajax({
                     type: 'DELETE',
                     url: '{{ url('admin/users', '') }}/' + id,
@@ -477,7 +440,7 @@
 
                 Swal.fire({
                     title: "Desactivado",
-                    text: "La unidad orgánica ha sido desactivada",
+                    text: "El usuario ha sido desactivada",
                     icon: "success"
                 });
             }
@@ -503,7 +466,7 @@
                 // Manejar la respuesta del servidor (opcional)
                 Swal.fire(
                     'Activada',
-                    'La Unidad ha sido activada',
+                    'El usuario ha sido activado',
                     'success'
                 );
                 user_table.ajax.reload(); //recargar la tabla

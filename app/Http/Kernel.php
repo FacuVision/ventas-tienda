@@ -38,6 +38,8 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\SetUserTheme::class,
             \App\Http\Middleware\RunAfterLoginMiddleware::class,
+            \App\Http\Middleware\CheckUserStatus::class,
+
 
 
         ],

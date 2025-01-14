@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,9 @@ class RunAfterLoginMiddleware
     {
         // Verificar si esta es la primera solicitud después de un login
         //Esta bandera la crea el Evento "MARKFIRSTLOGIN"
+
+
+
         if (Session::has('first_login')) {
             // Ejecutar la lógica necesaria
             // Por ejemplo, registrar una acción o actualizar algo

@@ -35,7 +35,7 @@ class UserController extends Controller
 
     public function listar_roles()
     {
-        $roles = Role::select("id","name", "name_detail")->get();
+        $roles = Role::select("id", "name", "name_detail")->get();
         return $roles;
     }
 
@@ -62,12 +62,12 @@ class UserController extends Controller
             ->addColumn('action', function ($user) {
                 //Si el status del user es activo se muestra la opcion de desactivar, de lo contrario se muestra para activar
                 if ($user->status == "activo") {
-                    return '<a id="user_show" href="javascript:void(0)" data-toggle ="modal" data-target="#md_show_user" class="btn btn-sm btn-info" data-id="' . $user->id . '"><i class="fas fa-solid fa-eye"></i></a>' ."&nbsp".
+                    return '<a id="user_show" href="javascript:void(0)" data-toggle ="modal" data-target="#md_show_user" class="btn btn-sm btn-info" data-id="' . $user->id . '"><i class="fas fa-solid fa-eye"></i></a>' . "&nbsp" .
                         '<a href="javascript:void(0)" class="btn btn-sm btn-warning" data-id="' . $user->id . '" data-toggle ="modal" data-target="#md_edit_user" id="bt_user_edit"> <i class="fas fa-solid fa-pen"></i> </a>'
                         . "&nbsp" . '<a id="user_delete" href="javascript:void(0)" class="btn btn-sm btn-danger" data-id="' . $user->id . '"><i class="fas fa-solid fa-trash"></i></a>';
                 } else {
-                    return  '<a id="user_show" href="javascript:void(0)" class="btn btn-sm btn-info" data-id="' . $user->id . '"><i class="fas fa-solid fa-eye"></i></a>' ."&nbsp".
-                    '<a href="javascript:void(0)" class="btn btn-sm btn-warning" data-id="' . $user->id . '" data-toggle ="modal" data-target="#md_edit_user" id="bt_user_edit"> <i class="fas fa-solid fa-pen"></i> </a>'
+                    return  '<a id="user_show" href="javascript:void(0)" class="btn btn-sm btn-info" data-id="' . $user->id . '"><i class="fas fa-solid fa-eye"></i></a>' . "&nbsp" .
+                        '<a href="javascript:void(0)" class="btn btn-sm btn-warning" data-id="' . $user->id . '" data-toggle ="modal" data-target="#md_edit_user" id="bt_user_edit"> <i class="fas fa-solid fa-pen"></i> </a>'
                         . "&nbsp" . '<a id="user_activate" href="javascript:void(0)" class="btn btn-sm btn-success" data-id="' . $user->id . '"><i class="fas fa-solid fa-check"></i></a>';
                 }
             })
@@ -107,7 +107,15 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        //Se está reutilizando para reactivar un usuario
+
+        $user = User::findOrFail($id);
+
+        if ($user) {
+            $user->update([
+                "status" => "activo"
+            ]);
+        }
     }
 
     /**
@@ -143,7 +151,6 @@ class UserController extends Controller
         ]);
 
         $user->syncRoles($request->edit_select_roles);
-
     }
 
     /**
@@ -151,6 +158,14 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //Se está reutilizando para reactivar un usuario
+
+        $user = User::findOrFail($id);
+
+        if ($user) {
+            $user->update([
+                "status" => "inactivo"
+            ]);
+        }
     }
 }
