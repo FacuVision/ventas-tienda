@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Computer;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -35,6 +36,12 @@ class DatabaseSeeder extends Seeder
             'n_document' => '74741985',
             'lastname' => 'Garayar'
         ])->assignRole("superadmin");
+
+        Computer::create([
+            "name" => "PC-16",
+            "detail" => "Computadora de escritorio",
+            "owner" => "Emmanuel"
+        ]);
 
     }
 }

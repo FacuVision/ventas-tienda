@@ -106,7 +106,7 @@
                         </div>
 
                         <div class="col">
-                            <a href="{{ route('admin.index') }}">
+                            <a href="{{ route('admin.computers.index') }}">
                                 <div class="info-box bg-purple shadow-on-hover">
                                     <span class="info-box-icon"><i class="fas fa-laptop"></i></span>
                                     <div class="info-box-content">
@@ -142,6 +142,15 @@
                                 <span class="info-box-icon"><i class="fas fa-solid fa-clipboard"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Tipos de pagos</span>
+                                    <span class="info-box-number">10 registros</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="info-box bg-navy shadow-on-hover ">
+                                <span class="info-box-icon"><i class="fas fa-solid fa-clock"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Logs de acceso</span>
                                     <span class="info-box-number">10 registros</span>
                                 </div>
                             </div>

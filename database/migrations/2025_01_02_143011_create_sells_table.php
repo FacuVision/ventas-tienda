@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string("description");
 
+            $table->decimal('mount', 8, 2);
+
             $table->enum('status', ['activo','inactivo'])->default('activo');
 
             $table->unsignedBigInteger('job_id');

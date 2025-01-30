@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("detail");
+            $table->string("owner");
             $table->enum('status', ['activo','inactivo'])->default('activo');
             $table->timestamps();
         });

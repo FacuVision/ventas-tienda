@@ -40,8 +40,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\RunAfterLoginMiddleware::class,
             \App\Http\Middleware\CheckUserStatus::class,
 
-
-
         ],
 
         'api' => [

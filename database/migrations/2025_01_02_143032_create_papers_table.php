@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('papers', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("description");
-
+            $table->string("name"); //de un select
+            $table->integer("quantity"); //numero
+            $table->decimal('total_mount', 8, 2); //muliplicado = cantidad x precio
+            $table->string("observations");
             $table->enum('status', ['activo','inactivo'])->default('activo');
-
             $table->unsignedBigInteger('job_id');
             $table->foreign('job_id')
             ->references('id')

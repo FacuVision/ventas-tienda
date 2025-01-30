@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Listeners\LogUserLogin;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +17,14 @@ use Illuminate\Auth\Events\Login;
 class EventServiceProvider extends ServiceProvider
 {
 
-
-
+    /**
+     * The event listener mappings for the application.
+     */
+    protected $listen = [
+        Login::class => [
+            LogUserLogin::class,
+        ],
+    ];
 
     /**
      * Register any events for your application.
@@ -26,9 +33,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Register listener for ReadingDarkModePreference event. We use this
-        // event to setup dark mode initial status for AdminLTE package.
 
+        parent::boot();
 
         Event::listen(
             Login::class,
@@ -44,6 +50,7 @@ class EventServiceProvider extends ServiceProvider
                 ]);
             }
         );
+
 
         Event::listen(
             ReadingDarkModePreference::class,

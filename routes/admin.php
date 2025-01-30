@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ComputerController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,10 @@ Route::get('/', [HomeController::class, 'index'])->name('admin.index');
 // Rutas para categorías
 Route::resource('categories', CategoryController::class)->names('admin.categories');
     Route::get('listar_categories', [CategoryController::class, 'listar_categories'])->name('admin.categories.listar_categories');
+
+// Rutas para categorías
+Route::resource('computers', ComputerController::class)->names('admin.computers');
+    Route::get('listar_computers', [ComputerController::class, 'listar_computers'])->name('admin.computers.listar_computers');
 
 // Rutas para usuarios
 Route::resource('users', UserController::class)->names('admin.users');
