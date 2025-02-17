@@ -354,6 +354,14 @@ return [
 
                 ],
                 [
+                    'text' => 'Computadoras',
+                    'route' => 'admin.computers.index',
+                    'icon' => 'fas fa-laptop',
+                    'icon_color' => 'primary',
+                    'can' => 'admin.computers.index'
+
+                ],
+                [
                     'text' => 'Ventas',
                     'url' => '#',
                     'icon' => 'fas fa-shopping-cart',

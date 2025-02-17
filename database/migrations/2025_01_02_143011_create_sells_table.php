@@ -31,10 +31,13 @@ return new class extends Migration
             ->references('id')
             ->on('categories');
 
-            $table->unsignedBigInteger('payment_type_id');
-            $table->foreign('payment_type_id')
-            ->references('id')
-            ->on('payment_types');
+            $table->string("payment_type_sell");
+
+            //efectivo
+            //yape
+            //transferencia bancaria
+            //plin
+
 
             $table->string("observations");
 

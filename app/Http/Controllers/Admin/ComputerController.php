@@ -23,9 +23,9 @@ class ComputerController extends Controller
     public function listar_computers()
     {
 
-        $categories = Computer::select("id", "name", "owner", "detail", "status", "created_at", "updated_at")->get();
+        $computers = Computer::select("id", "name", "owner", "detail", "status", "created_at", "updated_at")->get();
 
-        return DataTables::of($categories)
+        return DataTables::of($computers)
 
             ->addColumn('action', function ($computer) {
                 //Si el status del computer es activo se muestra la opcion de desactivar, de lo contrario se muestra para activar
@@ -67,7 +67,11 @@ class ComputerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $computer = Computer::findOrFail($id);
+
+        $computer->update([
+            "status" => "activo"
+        ]);
     }
 
     /**
@@ -96,8 +100,12 @@ class ComputerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $computer = Computer::findOrFail($id);
+
+        $computer->update([
+            "status" => "inactivo"
+        ]);
     }
 }

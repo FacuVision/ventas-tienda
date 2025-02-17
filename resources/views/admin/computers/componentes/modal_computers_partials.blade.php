@@ -30,9 +30,9 @@
                         <div class="mb-3">
                             <label for="computer_owner" class="form-label">Dueño</label>
                             <select name="owner" class="form-control form-control-sm"
-                                id="computer_owner" placeholder="Dueño">
-                                <option value="EMMANUEL">Emmanuel</option>
-                                <option value="ANA">Ana</option>
+                                id="computer_owner_create" placeholder="Dueño">
+                                {{-- <option value="EMMANUEL">Emmanuel</option>
+                                <option value="ANA">Ana</option> --}}
                             </select>
 
                         </div>
@@ -92,11 +92,17 @@
                     <div class="form-group">
                         <div class="mb-3">
                             <label for="computer_owner" class="form-label">Dueño</label>
-                            <select name="owner" class="form-control form-control-sm"
-                                id="computer_owner_id" placeholder="Dueño">
-                                <option value="EMMANUEL">Emmanuel</option>
-                                <option value="ANA">Ana</option>
-                            </select>
+                            <div class="select-dinamic-edit">
+                                {{-- <select name="owner" class="form-control form-control-sm"
+                                    id="computer_owner_id" placeholder="Dueño">
+                                    <option value="EMMANUEL">Emmanuel</option>
+                                    <option value="ANA">Ana</option>
+                                </select> --}}
+
+                                <select name="owner" class="form-control form-control-sm" id="computer_owner_edit" placeholder="Dueño">
+                                    <!-- Las opciones se cargarán dinámicamente -->
+                                </select>
+                            </div>
 
                         </div>
                     </div>

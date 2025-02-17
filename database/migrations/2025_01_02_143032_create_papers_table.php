@@ -23,10 +23,13 @@ return new class extends Migration
             ->references('id')
             ->on('jobs');
 
-            $table->unsignedBigInteger('payment_type_id');
-            $table->foreign('payment_type_id')
-            ->references('id')
-            ->on('payment_types');
+            $table->string("payment_type_paper");
+
+            //efectivo
+            //yape
+            //transferencia bancaria
+            //plin
+
 
             $table->timestamps();
         });

@@ -41,5 +41,13 @@ class RoleSeeder extends Seeder
         Permission::create(["name"=>"admin.users.activation"])->assignRole([$superadmin]); // permiso para activar/desactivar
         Permission::create(["name"=>"admin.users.destroy"])->assignRole([$superadmin]); // permiso para activar/desactivar
 
+        //computadoras
+        Permission::create(["name"=>"admin.computers.index"])->assignRole([$superadmin,$register,$lector]);
+        Permission::create(["name"=>"admin.computers.create"])->assignRole([$superadmin,$register]);
+        Permission::create(["name"=>"admin.computers.edit"])->assignRole([$superadmin]);
+        Permission::create(["name"=>"admin.computers.listar_computers"])->assignRole([$superadmin,$register,$lector]);
+        Permission::create(["name"=>"admin.computers.activation"])->assignRole([$superadmin]); // permiso para activar/desactivar
+        Permission::create(["name"=>"admin.computers.destroy"])->assignRole([$superadmin]); // permiso para activar/desactivar
+
     }
 }

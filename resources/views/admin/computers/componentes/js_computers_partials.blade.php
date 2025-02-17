@@ -8,6 +8,8 @@
     let listaErroresCreate = $("#lista-errores-computers-create");
     let alerta_create_computers = $("#alerta_create_computers");
 
+    let lista_dueños;
+
     function limpiarListaErrores() {
         listaErrores.empty();
         alerta_edit_computers.hide();
@@ -17,6 +19,31 @@
         listaErroresCreate.empty();
         alerta_create_computers.hide();
     }
+
+    async function ObtenerListaDueñosPc() {
+
+        let listausers = []
+
+        try {
+            let response = await $.ajax({
+                url: '{{ route('admin.users.listar_usuarios') }}', // Ruta definida en web.php
+                method: 'GET',
+                dataType: 'json'
+            });
+
+            // Recorremos la respuesta y agregamos cada opción
+            $.each(response.data, function(index, user) {
+                listausers.push(user.name)
+            });
+
+            return listausers;
+
+        } catch (error) {
+            console.error("Error al cargar los usuarios:", error);
+            return [];
+        }
+    }
+
 
     function cargar_lista_computers() {
         let lista_ajax = $('#computers-table').DataTable({
@@ -35,8 +62,7 @@
                 }
             },
             ajax: '{{ route('admin.computers.listar_computers') }}',
-            columns: [
-                {
+            columns: [{
                     data: 'id',
                     name: 'id'
                 },
@@ -84,18 +110,41 @@
 
 
     // ############################################################ Funcion incial para cargar el datatable por primera vez
-    $(document).ready(function() {
 
-        //ESTE TOKEC CSRF LO SOLICITA LA LIBRERIA YAJRA PARA PODER HACER EL ENVIO DE LA
-        //PETICION Y LA RECEPCION DE LA MISMA
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+    $(document).ready(async function() {
+        try {
+            // Configuración del token CSRF para la solicitud AJAX
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-        computer_table = cargar_lista_computers()
+            // Obtener referencias a los elementos select
+            const arrayselects = ['#computer_owner_edit', '#computer_owner_create'];
+
+            // Limpiar contenido de los arrayselects
+            arrayselects.forEach(selector => $(selector).empty());
+
+            // Cargar la tabla de computadoras
+            computer_table = cargar_lista_computers();
+
+            // Obtener lista de dueños
+            const lista_dueños = await ObtenerListaDueñosPc();
+
+            // Llenar ambos selects con la lista de dueños
+            arrayselects.forEach(selector => {
+                const select = $(selector);
+                lista_dueños.forEach(owner => {
+                    select.append(new Option(owner, owner)); // Simplificado
+                });
+            });
+
+        } catch (error) {
+            console.error("Error al inicializar la página:", error);
+        }
     });
+
 
 
 
@@ -192,7 +241,7 @@
             success: function(response) {
                 // Manejar la respuesta del servidor (opcional)
 
-                //console.log(response);
+                console.log(response);
 
                 //UNA VEZ QUE SE HAYA RECEPCIONADO EL MODELO POR AJAX, SE PROCEDE A LA ACTUALIZACION
 
@@ -200,7 +249,7 @@
                 $("#computer_title").html(response.name);
                 $("#computer_name_id").val(response.name);
                 $("#computer_detail_id").val(response.detail);
-                $("#computer_owner_id").val(response.owner);
+                $("#computer_owner_edit").val(response.owner);
 
             },
             error: function(xhr) {
@@ -279,7 +328,7 @@
 
         Swal.fire({
             title: "¿Estás seguro?",
-            text: "Si tu desactivas esta Categoría, esta no podrá visualizarse en el menu de creacion de comprobantes",
+            text: "Si tu desactivas esta pc, esta no podrá visualizarse para creacion de los trabajos",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -289,7 +338,7 @@
             if (result.isConfirmed) {
                 // Si el usuario hace clic en "Aceptar", ejecutamos la lógica de eliminación aquí
 
-                //console.log(id);
+                // console.log(id);
                 $.ajax({
                     type: 'DELETE',
                     url: '{{ url('admin/computers', '') }}/' + id,
@@ -300,13 +349,13 @@
                     },
                     error: function(xhr) {
                         // Manejar errores (opcional)
-                        //console.error(xhr.responseText);
+                        console.error(xhr.responseText);
                     }
                 });
 
                 Swal.fire({
                     title: "Desactivado",
-                    text: "La Categoría ha sido desactivada",
+                    text: "La Computadora ha sido desactivada",
                     icon: "success"
                 });
             }
@@ -318,7 +367,7 @@
     });
 
 
-    // ############################################################ Funcion ACtivar Categoría
+    // ############################################################ Funcion ACtivar Computadora
 
     //usamos el evento on() porque estamos trabajando con elementos que son dinamicos y no
     //fueron creados al momento de iniciar la página, por ello no usamos ".click(function()"
@@ -332,7 +381,7 @@
                 // Manejar la respuesta del servidor (opcional)
                 Swal.fire(
                     'Activada',
-                    'La Categoría ha sido activada',
+                    'La Computadora ha sido activada',
                     'success'
                 );
                 computer_table.ajax.reload(); //recargar la tabla

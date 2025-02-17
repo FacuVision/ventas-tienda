@@ -76,7 +76,7 @@
                                     </span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Categorias</span>
-                                        <span class="info-box-number">registros</span>
+                                        <span class="info-box-number">{{$categories}} registros</span>
                                     </div>
                                 </div>
                             </a>
@@ -88,7 +88,7 @@
 
                                     <div class="info-box-content">
                                         <span class="info-box-text">Usuarios</span>
-                                        <span class="info-box-number">registros</span>
+                                        <span class="info-box-number">{{$users}} registros</span>
                                     </div>
                                 </div>
                             </a>
@@ -111,7 +111,7 @@
                                     <span class="info-box-icon"><i class="fas fa-laptop"></i></span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Computadoras</span>
-                                        <span class="info-box-number">registros</span>
+                                        <span class="info-box-number">{{$computers}} registros</span>
                                     </div>
                                 </div>
                             </a>

@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
 
         User::factory()->create([
-            'name' => 'Emmanuel',
-            'lastname' => 'Garayar',
+            'name' => 'EMMANUEL',
+            'lastname' => 'GARAYAR',
             'phone' => '987372725',
             'address' => 'Oasis de Villa - STR 10, GR 3, MZ G, LT 7',
             'status' => 'activo',
@@ -34,7 +34,6 @@ class DatabaseSeeder extends Seeder
             "password" => bcrypt("74741985"),
             'document_type' => 'DNI',
             'n_document' => '74741985',
-            'lastname' => 'Garayar'
         ])->assignRole("superadmin");
 
         Computer::create([
