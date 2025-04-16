@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->enum('status', ['activo','inactivo'])->default('activo');
-            $table->enum('pay_status', ['pendiente','cancelado','con observaciones'])->default('pendiente');
+            $table->string('pay_status')->default('pendiente');
 
             $table->unsignedBigInteger('user_id');
 
@@ -29,8 +29,8 @@ return new class extends Migration
             ->references('id')
             ->on('computers');
 
-            $table->string("observations");
-
+            $table->string("observations")->nullable();
+            $table->date('date'); //fecha en la que inicia  la jornada
             $table->dateTime('end_datetime')->nullable(); //fecha en la que cierra la jornada
             $table->timestamps(); //incluye la fecha de creacion y la fecha de actualizacion
         });

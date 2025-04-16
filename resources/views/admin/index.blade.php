@@ -94,11 +94,11 @@
                             </a>
                         </div>
                         <div class="col">
-                            <a href="{{ route('admin.index') }}">
+                            <a href="{{ route('user.jobs.index') }}">
                                 <div class="info-box bg-olive shadow-on-hover ">
-                                    <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
+                                    <span class="info-box-icon"><i class="fas fa-pen"></i></span>
                                     <div class="info-box-content">
-                                        <span class="info-box-text">Ventas</span>
+                                        <span class="info-box-text">Jornada</span>
                                         <span class="info-box-number">registros</span>
                                     </div>
                                 </div>

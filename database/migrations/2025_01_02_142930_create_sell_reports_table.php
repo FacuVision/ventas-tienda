@@ -19,22 +19,22 @@ return new class extends Migration
             ->references('id')
             ->on('jobs');
 
-            $table->decimal('total_mount', 8, 2);
+            $table->decimal('total_mount', 8, 2)->default(0);
             //monto total (recaudado general + papeleria)
 
-            $table->decimal('box_mount', 8, 2);
+            $table->decimal('box_mount', 8, 2)->default(0);
             //monto de caja - solo transferencias
 
-            $table->decimal('total_only_paper', 8, 2);
+            $table->decimal('total_only_paper', 8, 2)->default(0);
             //monto de solo papeleria
 
-            $table->decimal('total_only_sell', 8, 2);
+            $table->decimal('total_only_sell', 8, 2)->default(0);
             // monto de solo ventas
 
-            $table->decimal('real_worker_pay', 8, 2);
+            $table->decimal('real_worker_pay', 8, 2)->default(0);
             //monto de 50% real
 
-            $table->decimal('worker_pay', 8, 2);
+            $table->decimal('worker_pay', 8, 2)->default(0);
             //monto de 50% real - trabajador
 
             $table->timestamps();

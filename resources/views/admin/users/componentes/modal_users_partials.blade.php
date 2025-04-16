@@ -233,7 +233,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="mb-3">
-                                    <label for="select_roles_edit" class="form-label">Rol de acceso</label>
+                                    <label for="select_roles_edit" class="form-label">Computadora</label>
                                     <select name="edit_select_roles" class="form-control form-control-sm"
                                         id="select_roles_edit"></select>
                                 </div>
@@ -274,7 +274,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="mb-3">
-                                <label for="informacion" class="form-label">Inormacion</label>
+                                <label for="informacion" class="form-label">Informacion</label>
                                 <div class="input-group mb-3">
                                     <div id="informacion"></div>
                                 </div>

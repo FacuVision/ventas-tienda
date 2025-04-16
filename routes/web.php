@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\JobController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,13 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('jobs', JobController::class)->names('user.jobs');
+    Route::get('listar_jobs', [JobController::class, 'listar_jobs'])->name('user.jobs.listar_jobs');
+    Route::get("ver_job/{id}", [JobController::class , "ver_job"])->name("admin.users.ver_job");
+
 });

@@ -66,7 +66,7 @@ class UserController extends Controller
                         '<a href="javascript:void(0)" class="btn btn-sm btn-warning" data-id="' . $user->id . '" data-toggle ="modal" data-target="#md_edit_user" id="bt_user_edit"> <i class="fas fa-solid fa-pen"></i> </a>'
                         . "&nbsp" . '<a id="user_delete" href="javascript:void(0)" class="btn btn-sm btn-danger" data-id="' . $user->id . '"><i class="fas fa-solid fa-trash"></i></a>';
                 } else {
-                    return  '<a id="user_show" href="javascript:void(0)" class="btn btn-sm btn-info" data-id="' . $user->id . '"><i class="fas fa-solid fa-eye"></i></a>' . "&nbsp" .
+                    return  '<a id="user_show" href="javascript:void(0)" data-toggle ="modal" data-target="#md_show_user" class="btn btn-sm btn-info" data-id="' . $user->id . '"><i class="fas fa-solid fa-eye"></i></a>' . "&nbsp" .
                         '<a href="javascript:void(0)" class="btn btn-sm btn-warning" data-id="' . $user->id . '" data-toggle ="modal" data-target="#md_edit_user" id="bt_user_edit"> <i class="fas fa-solid fa-pen"></i> </a>'
                         . "&nbsp" . '<a id="user_activate" href="javascript:void(0)" class="btn btn-sm btn-success" data-id="' . $user->id . '"><i class="fas fa-solid fa-check"></i></a>';
                 }

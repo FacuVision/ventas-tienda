@@ -362,9 +362,10 @@ return [
 
                 ],
                 [
-                    'text' => 'Ventas',
-                    'url' => '#',
-                    'icon' => 'fas fa-shopping-cart',
+                    'text' => 'Jornada',
+                    'icon' => 'fas fa-pen',
+                    'route' => 'user.jobs.index',
+                    //'can' => 'user.jobs.index',
                     'icon_color' => 'green'
                 ],
             ],
