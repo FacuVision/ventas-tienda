@@ -452,6 +452,7 @@
                     </li>
 
                 `);
+
             },
 
             error: function(xhr) {
@@ -471,12 +472,55 @@
 
 
 
-    // ############################################################ Funcion PARA ABRIR UN TRABAJO
+    // ############################################################ Funcion Eliminar (PENDIENTE)
+    //ajax para desactivar las jobs
+
+    $("body").on("click", "#job_delete", function() {
 
 
-    $("body").on("click", "#job_open", function() {
         var id = $(this).data('id');
-        window.location.href = '{{ url('sells', '') }}/' + id;
+
+        // Puedes realizar una solicitud AJAX para eliminar el registro o cualquier otra acción que necesites
+        //e.preventDefault(); //NO ES NECESARIO ACTIVAR EL PREVENT DEFAULT CUANDO SE HACE UNA DESACTIVACION
+
+        Swal.fire({
+            title: "¿Estás seguro?",
+            text: "Si tu desactivas esta pc, esta no podrá visualizarse para creacion de los trabajos",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, desactívalo"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario hace clic en "Aceptar", ejecutamos la lógica de eliminación aquí
+
+                // console.log(id);
+                $.ajax({
+                    type: 'DELETE',
+                    url: '{{ url('jobs', '') }}/' + id,
+                    success: function(response) {
+                        // Manejar la respuesta del servidor (opcional)
+                        //console.log(response);
+                        job_table.ajax.reload(); //recargar la tabla
+                    },
+                    error: function(xhr) {
+                        // Manejar errores (opcional)
+                        console.error(xhr.responseText);
+                    }
+                });
+
+                Swal.fire({
+                    title: "Desactivado",
+                    text: "La Computadora ha sido desactivada",
+                    icon: "success"
+                });
+            }
+        });
+
+        // Si el usuario hace clic en "Cancelar", no hacemos nada
+        // Aquí puedes agregar cualquier otra acción que desees realizar si el usuario cancela
+
     });
 
 
@@ -484,20 +528,25 @@
 
     //usamos el evento on() porque estamos trabajando con elementos que son dinamicos y no
     //fueron creados al momento de iniciar la página, por ello no usamos ".click(function()"
-    // $("body").on("click", "#job_close", function() {
-    //     var id = $(this).data('id');
-    //     // LOGICA DE ACTIVACION
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: '{{ url('jobs', '') }}/' + id,
-    //         success: function(response) {
-    //             // Manejar la respuesta del servidor (opcional)
-
-    //         },
-    //         error: function(xhr) {
-    //             // Manejar errores (opcional)
-    //             console.error(xhr.responseText);
-    //         }
-    //     });
-    // });
+    $("body").on("click", "#job_activate", function() {
+        var id = $(this).data('id');
+        // LOGICA DE ACTIVACION
+        $.ajax({
+            type: 'GET',
+            url: '{{ url('jobs', '') }}/' + id,
+            success: function(response) {
+                // Manejar la respuesta del servidor (opcional)
+                Swal.fire(
+                    'Activada',
+                    'La Computadora ha sido activada',
+                    'success'
+                );
+                job_table.ajax.reload(); //recargar la tabla
+            },
+            error: function(xhr) {
+                // Manejar errores (opcional)
+                //console.error(xhr.responseText);
+            }
+        });
+    });
 </script>

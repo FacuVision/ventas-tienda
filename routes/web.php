@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\JobController;
+use App\Http\Controllers\User\SellController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +36,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('listar_jobs', [JobController::class, 'listar_jobs'])->name('user.jobs.listar_jobs');
     Route::get("ver_job/{id}", [JobController::class , "ver_job"])->name("admin.users.ver_job");
 
+    Route::resource('sells', SellController::class)->names('user.sells');
 });

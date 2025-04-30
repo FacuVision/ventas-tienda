@@ -26,7 +26,6 @@ class JobUpdateRequest extends FormRequest
             "id" => "required",
             "date" => "required",
             "status" => "required",
-            "pay_status" => "required",
             "observations" => "required"
         ];
     }
@@ -38,7 +37,6 @@ class JobUpdateRequest extends FormRequest
             "id.required" => "El id trabajo es requerido",
             "date.required" => "La fecha es requerida",
             "status.required" => "El estado es requerido",
-            "pay_status.required" => "El estado de pago es requerido",
             "observations.required" => "Las observaciones son obligatorias"
         ];
     }

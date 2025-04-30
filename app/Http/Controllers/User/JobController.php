@@ -54,7 +54,7 @@ class JobController extends Controller
                 if ($job->status == "activo" && $job->end_datetime == "") {
                     return '<a id="job_show" href="javascript:void(0)" class="btn btn-sm btn-info" data-id="' . $job->id . '"><i class="fas fa-eye"></i></a>&nbsp' .
                         '<a href="javascript:void(0)" class="btn btn-sm btn-warning" data-id="' . $job->id . '" data-toggle="modal" data-target="#md_edit_job" id="bt_job_edit"><i class="fas fa-pen"></i></a>&nbsp'.
-                        '<a id="job_close" href="javascript:void(0)" class="btn btn-sm btn-danger" data-id="' . $job->id . '"><i class="fas fa-arrow-circle-right"></i></a>'
+                        '<a id="job_open" href="javascript:void(0)" class="btn btn-sm btn-success" data-id="' . $job->id . '"><i class="fas fa-arrow-circle-right"></i></a>'
                         ;
                 } else {
                     return '<a id="job_show" href="javascript:void(0)" class="btn btn-sm btn-info" data-id="' . $job->id . '"><i class="fas fa-eye"></i></a>';
@@ -110,9 +110,16 @@ class JobController extends Controller
     public function update(JobUpdateRequest $request, string $id)
     {
         $job = Job::findOrFail($id);
+
+        if($request->status == "inactivo"){
+            $pay_status = "anulado";
+        } else {
+            $pay_status = $request->pay_status;
+        }
+
         $job->update([
             "status"=> $request->status,
-            "pay_status"=> $request->pay_status,
+            "pay_status"=> $pay_status,
             "observations"=> $request->observations
         ]);
     }
