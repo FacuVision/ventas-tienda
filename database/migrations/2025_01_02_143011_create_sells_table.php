@@ -39,7 +39,7 @@ return new class extends Migration
             //plin
 
 
-            $table->string("observations");
+            $table->string("observations")->nullable();
 
             $table->timestamps(); //incluye la fecha de creacion y la fecha de actualizacion
 

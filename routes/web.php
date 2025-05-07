@@ -37,4 +37,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get("ver_job/{id}", [JobController::class , "ver_job"])->name("admin.users.ver_job");
 
     Route::resource('sells', SellController::class)->names('user.sells');
+    Route::get('listar_sells/{id}', [SellController::class, 'listar_sells'])->name('user.sells.listar_sells');
 });

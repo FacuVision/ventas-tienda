@@ -1,24 +1,24 @@
 {{-- ----- INICIALIZAR YAJRA-DATATABLES ############################################################ --}}
 
 <script>
-    let job_table;
-    let listaErrores = $("#lista-errores-jobs-edit");
-    let alerta_edit_jobs = $("#alerta_edit_jobs");
+    let sell_table;
+    let listaErrores = $("#lista-errores-sells-edit");
+    let alerta_edit_sells = $("#alerta_edit_sells");
 
-    let listaErroresCreate = $("#lista-errores-jobs-create");
-    let alerta_create_jobs = $("#alerta_create_jobs");
+    let listaErroresCreate = $("#lista-errores-sells-create");
+    let alerta_create_sells = $("#alerta_create_sells");
 
     let lista_pc;
     let lista_estados_pago;
 
     function limpiarListaErrores() {
         listaErrores.empty();
-        alerta_edit_jobs.hide();
+        alerta_edit_sells.hide();
     }
 
     function limpiarListaErroresCreate() {
         listaErroresCreate.empty();
-        alerta_create_jobs.hide();
+        alerta_create_sells.hide();
     }
 
     // Función para formatear fechas en formato dd-mm-yy H:m:s
@@ -43,41 +43,49 @@
 
 
 
-    async function ObtenerListaPc() {
+    // async function ObtenerListaPc() {
 
-        let listapc = []
+    //     let listapc = []
 
-        try {
-            let response = await $.ajax({
-                url: '{{ route('admin.computers.listar_computers') }}', // Ruta definida en web.php
-                method: 'GET',
-                dataType: 'json'
-            });
+    //     try {
+    //         let response = await $.ajax({
+    //             url: '{{ route('admin.computers.listar_computers') }}', // Ruta definida en web.php
+    //             method: 'GET',
+    //             dataType: 'json'
+    //         });
 
-            //Recorremos la respuesta y agregamos cada opción
-            $.each(response.data, function(index, pc) {
-                if (pc.status === "activo") {
-                    listapc.push({
-                        id: pc.id,
-                        name: pc.name,
-                        owner: pc.owner
-                    });
-                }
-            });
+    //         //Recorremos la respuesta y agregamos cada opción
+    //         $.each(response.data, function(index, pc) {
+    //             if (pc.status === "activo") {
+    //                 listapc.push({
+    //                     id: pc.id,
+    //                     name: pc.name,
+    //                     owner: pc.owner
+    //                 });
+    //             }
+    //         });
 
-            //console.log(listapc);
+    //         //console.log(listapc);
 
-            return listapc; // 👈 MUY IMPORTANTE
+    //         return listapc; // 👈 MUY IMPORTANTE
 
-        } catch (error) {
-            console.error("Error al cargar las pc:", error);
-            return [];
-        }
-    }
+    //     } catch (error) {
+    //         console.error("Error al cargar las pc:", error);
+    //         return [];
+    //     }
+    // }
 
 
-    function cargar_lista_jobs() {
-        let lista_ajax = $('#jobs-table').DataTable({
+    function cargar_lista_sells() {
+
+        // Obtener el pathname: /ventas-tienda/public/sells/4
+        let path = window.location.pathname;
+        // Dividir por "/" y obtener el último segmento
+        let sell_id = path.split("/").pop();
+        // Colocar el ID en el <span id="job_id">
+        $("#job_id").text(sell_id);
+
+        let lista_ajax = $('#sells-table').DataTable({
             processing: true,
             serverSide: true,
             language: {
@@ -92,34 +100,36 @@
                     'previous': 'Anterior'
                 }
             },
-            ajax: '{{ route('user.jobs.listar_jobs') }}',
+
+            ajax: '{{ url('listar_sells', '') }}/' + sell_id,
+
             columns: [{
                     data: 'id',
                     name: 'id'
-                },
-                {
-                    data: 'status',
-                    name: 'status'
                 },
                 {
                     data: 'name',
                     name: 'name'
                 },
                 {
-                    data: 'owner',
-                    name: 'name'
+                    data: 'description',
+                    name: 'description'
                 },
                 {
-                    data: 'pay_status',
-                    name: 'pay_status'
+                    data: 'payment_type_sell',
+                    name: 'payment_type_sell'
                 },
                 {
-                    data: 'date',
-                    name: 'date'
+                    data: 'mount',
+                    name: 'mount'
                 },
                 {
-                    data: 'end_datetime',
-                    name: 'end_datetime'
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at'
                 },
                 {
                     data: 'action',
@@ -136,18 +146,20 @@
             createdRow: function(row, data, dataIndex) {
                 // Columna 1: status
                 if (data.status === 'activo') {
-                    $('td:eq(1)', row).addClass('badge badge-success mt-1');
+                    $('td:eq(5)', row).addClass('badge badge-success mt-1');
                 } else if (data.status === 'inactivo') {
-                    $('td:eq(1)', row).addClass('badge badge-secondary mt-1');
+                    $('td:eq(5)', row).addClass('badge badge-secondary mt-1');
                 }
 
                 // Columna 4: pay_status
-                if (data.pay_status === 'cancelado') {
-                    $('td:eq(4)', row).addClass('badge badge-success mt-1');
-                } else if (data.pay_status === 'pendiente') {
-                    $('td:eq(4)', row).addClass('badge badge-secondary mt-1');
-                } else if (data.pay_status === 'anulado') {
-                    $('td:eq(4)', row).addClass('badge badge-dark mt-1');
+                if (data.payment_type_sell === 'yape') {
+                    $('td:eq(3)', row).addClass('badge badge-success mt-1');
+                } else if (data.payment_type_sell === 'transferencia') {
+                    $('td:eq(3)', row).addClass('badge badge-primary mt-1');
+                } else if (data.payment_type_sell === 'efectivo') {
+                    $('td:eq(3)', row).addClass('badge badge-secondary mt-1');
+                } else if (data.payment_type_sell === 'plin') {
+                    $('td:eq(3)', row).addClass('badge badge-info mt-1');
                 }
             }
         });
@@ -168,22 +180,7 @@
                 }
             });
 
-            job_table = cargar_lista_jobs();
-
-            // Obtener lista de PCs
-            let lista_pc = await ObtenerListaPc();
-
-            // Referencia al select
-            const select = $("#select_computer_create_id");
-            // Limpiar el select antes de llenarlo
-            select.empty();
-            // Agregar una opción por defecto
-            select.append(new Option("Seleccione una PC", ""));
-            // Llenar el select con las PCs activas
-            lista_pc.forEach(pc => {
-                const label = `${pc.name} - ${pc.owner}`; // Concatenación correcta
-                select.append(new Option(label, pc.id));
-            });
+            sell_table = cargar_lista_sells();
 
         } catch (error) {
             console.error("Error al inicializar la página:", error);
@@ -194,8 +191,8 @@
 
     // ############################################################ Funcion Ocultar modal de creacion
     // function hideModal() {
-    //     $("#job_name").val("");
-    //     $("#job_detail").val("");
+    //     $("#sell_name").val("");
+    //     $("#sell_detail").val("");
 
     //     // Selecciona el botón por su id
     //     var close_create = $('#close_create');
@@ -216,13 +213,13 @@
 
     // ############################################################ Funcion Para limpiar el campo de creacion del modal
 
-    $('#create_job_buttom_modal').click(function(e) {
+    $('#create_sell_buttom_modal').click(function(e) {
         limpiarListaErroresCreate();
     });
 
 
     // ############################################################ Funcion Crear (OK)
-    $('#form_create_job').on('submit', function(e) {
+    $('#form_create_sell').on('submit', function(e) {
 
         limpiarListaErroresCreate();
         e.preventDefault();
@@ -233,12 +230,12 @@
 
         $.ajax({
             type: 'POST',
-            url: '{{ route('user.jobs.store') }}', // Reemplaza 'nombre_de_ruta' con la ruta de destino en tu aplicación
+            url: '{{ route('user.sells.store') }}', // Reemplaza 'nombre_de_ruta' con la ruta de destino en tu aplicación
             data: formData,
             success: function(response) {
                 // Manejar la respuesta del servidor (opcional)
                 //console.log(response);
-                job_table.ajax.reload(); //recargar la tabla
+                sell_table.ajax.reload(); //recargar la tabla
 
                 Swal.fire({
                     title: 'Éxito',
@@ -257,7 +254,7 @@
                     $.each(errores, function(index, error) {
                         listaErroresCreate.append("<li>" + error + "</li>");
                     });
-                    alerta_create_jobs.show(); // Mostrar la alerta
+                    alerta_create_sells.show(); // Mostrar la alerta
                 }
             }
         });
@@ -272,19 +269,19 @@
     // <input type="checkbox" name="close_sell" id="close_sell_id">
     //             <label for="observations" class="form-label"> ¿Estás cerrando la venta y saliendo de la tienda?</label>
 
-    $('body').on('click', '#bt_job_edit', function() {
+    $('body').on('click', '#bt_sell_edit', function() {
 
         var id = $(this).data('id');
         limpiarListaErrores();
 
-        $("#job").val(id);
+        $("#sell").val(id);
 
         //console.log(id);
 
 
         $.ajax({
             type: 'GET',
-            url: '{{ url('jobs', '') }}/' + id + '/edit',
+            url: '{{ url('sells', '') }}/' + id + '/edit',
             success: function(response) {
                 // Manejar la respuesta del servidor (opcional)
                 //console.log(response);
@@ -292,8 +289,8 @@
                 //UNA VEZ QUE SE HAYA RECEPCIONADO EL MODELO POR AJAX, SE PROCEDE A LA ACTUALIZACION
 
 
-                $("#job_id").val(id);
-                $("#job_text_id").val(id);
+                $("#sell_id").val(id);
+                $("#sell_text_id").val(id);
                 $("#date_id").val(response[0].date);
                 $("#observations_id").val(response[0].observations);
                 $("#status_id").val(response[0].status);
@@ -311,17 +308,17 @@
     //ajax para hacer la actualizacion enviado el formulario con los datos
 
 
-    $('#form_edit_job').on('submit', function(e) {
+    $('#form_edit_sell').on('submit', function(e) {
         e.preventDefault();
         limpiarListaErrores();
 
         let formData = $(this).serialize();
-        let id = $("#job_id").val();
+        let id = $("#sell_id").val();
 
         // Paso 1: validar sin guardar aún (puedes usar una ruta custom o la misma con método POST)
         $.ajax({
             type: 'PUT',
-            url: '{{ url('jobs', '') }}/' + id,
+            url: '{{ url('sells', '') }}/' + id,
             data: formData,
             success: function(response) {
                 // Si pasa la validación, ahora sí mostramos el SweetAlert
@@ -337,7 +334,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: 'PUT',
-                            url: '{{ url('jobs', '') }}/' + id,
+                            url: '{{ url('sells', '') }}/' + id,
                             data: formData,
                             success: function(response) {
                                 Swal.fire({
@@ -345,7 +342,7 @@
                                     title: "¡Actualizado!",
                                     text: "Registro actualizado correctamente"
                                 });
-                                job_table.ajax.reload();
+                                sell_table.ajax.reload();
                                 hideModalEdit();
                             },
                             error: function(xhr) {
@@ -355,7 +352,7 @@
                                         listaErrores.append("<li>" +
                                             error + "</li>");
                                     });
-                                    alerta_edit_jobs.show();
+                                    alerta_edit_sells.show();
                                 }
                             }
                         });
@@ -368,7 +365,7 @@
                     $.each(errores, function(index, error) {
                         listaErrores.append("<li>" + error + "</li>");
                     });
-                    alerta_edit_jobs.show();
+                    alerta_edit_sells.show();
                 }
             }
         });
@@ -381,18 +378,18 @@
 
 
     // Escuchar clic en el botón con ID "user_show"
-    $("body").on("click", "#job_show", function() {
+    $("body").on("click", "#sell_show", function() {
         // Obtener el ID del usuario desde el atributo data-id
         var id = $(this).data("id");
 
         // Realizar la solicitud AJAX para obtener la información del usuario
         $.ajax({
             type: "GET",
-            url: "{{ url('ver_job', '') }}/" + id,
+            url: "{{ url('ver_sell', '') }}/" + id,
             success: function(response) {
 
                 // Mostrar información personal del usuario en el modal
-                $("#job_deail_list_id").html(`
+                $("#sell_deail_list_id").html(`
 
                     <li>
                         <div class="ms-2 me-auto">
@@ -473,9 +470,9 @@
 
 
     // ############################################################ Funcion Eliminar (PENDIENTE)
-    //ajax para desactivar las jobs
+    //ajax para desactivar las sells
 
-    $("body").on("click", "#job_delete", function() {
+    $("body").on("click", "#sell_delete", function() {
 
 
         var id = $(this).data('id');
@@ -498,11 +495,11 @@
                 // console.log(id);
                 $.ajax({
                     type: 'DELETE',
-                    url: '{{ url('jobs', '') }}/' + id,
+                    url: '{{ url('sells', '') }}/' + id,
                     success: function(response) {
                         // Manejar la respuesta del servidor (opcional)
                         //console.log(response);
-                        job_table.ajax.reload(); //recargar la tabla
+                        sell_table.ajax.reload(); //recargar la tabla
                     },
                     error: function(xhr) {
                         // Manejar errores (opcional)
@@ -528,12 +525,12 @@
 
     //usamos el evento on() porque estamos trabajando con elementos que son dinamicos y no
     //fueron creados al momento de iniciar la página, por ello no usamos ".click(function()"
-    $("body").on("click", "#job_activate", function() {
+    $("body").on("click", "#sell_activate", function() {
         var id = $(this).data('id');
         // LOGICA DE ACTIVACION
         $.ajax({
             type: 'GET',
-            url: '{{ url('jobs', '') }}/' + id,
+            url: '{{ url('sells', '') }}/' + id,
             success: function(response) {
                 // Manejar la respuesta del servidor (opcional)
                 Swal.fire(
@@ -541,7 +538,7 @@
                     'La Computadora ha sido activada',
                     'success'
                 );
-                job_table.ajax.reload(); //recargar la tabla
+                sell_table.ajax.reload(); //recargar la tabla
             },
             error: function(xhr) {
                 // Manejar errores (opcional)

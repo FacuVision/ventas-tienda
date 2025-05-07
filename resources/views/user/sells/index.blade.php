@@ -26,11 +26,11 @@
 
                 <div class="card-body">
 
-                    <div class="alert alert-danger" id="alerta_create_jobs" style="display: none;">
-                        <ul class="m-0" id="lista-errores-jobs-create"></ul>
+                    <div class="alert alert-danger" id="alerta_create_sells" style="display: none;">
+                        <ul class="m-0" id="lista-errores-sells-create"></ul>
                     </div>
 
-                    <form id="form_create_sell" style="max-width: 100%;">
+                    <form id="form_create_sell" style="max-width: 100%;" class="mb-0">
                         <div class="form-group">
 
                             <div class="mb-3">
@@ -41,18 +41,27 @@
 
                             <div class="mb-3">
                                 <label for="select_description" class="form-label">Descripcion</label>
-
                                 <input type="text" name="description" id="total_mount_paper_id"
                                     class="form-control form-control-sm">
                             </div>
 
-                            <div class="mb-3">
-                                <label for="total_mount_paper" class="form-label">Precio</label>
-                                <input type="text" name="total_mount_paper" id="total_mount_paper_id"
-                                    class="form-control form-control-sm">
+                            <div class="row">
+                                <div class="col">
+                                    <div>
+                                        <label for="total_mount_paper" class="form-label">Precio</label>
+                                        <input type="text" name="total_mount_paper" id="total_mount_paper_id"
+                                            class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                                <div class="col">
+
+                                    <div>
+                                        <label for="select_payment_type" class="form-label">Tipo de pago</label>
+                                        <select name="payment_type" class="form-control form-control-sm"
+                                            id="payment_type_id"></select>
+                                    </div>
+                                </div>
                             </div>
-
-
                         </div>
 
                         <button type="submit" class="btn btn-success">
@@ -73,11 +82,11 @@
 
                 <div class="card-body">
 
-                    <div class="alert alert-danger" id="alerta_create_jobs" style="display: none;">
-                        <ul class="m-0" id="lista-errores-jobs-create"></ul>
+                    <div class="alert alert-danger" id="alerta_create_sells" style="display: none;">
+                        <ul class="m-0" id="lista-errores-sells-create"></ul>
                     </div>
 
-                    <form id="form_create_paper" style="max-width: 100%;">
+                    <form id="form_create_paper" style="max-width: 100%;" class="mb-0">
                         <div class="form-group">
 
                             <div class="mb-3">
@@ -124,17 +133,17 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="jobs-table" class="table-striped table-hover dt-responsive nowrap display compact"
+                    <table id="sells-table" class="table-striped table-hover dt-responsive nowrap display compact"
                         style="width:100%">
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Categoria</th>
+                                <th>Descripcion</th>
+                                <th>Tipo de pago</th>
+                                <th>Precio</th>
                                 <th>Estado</th>
-                                <th>Pc Nombre</th>
-                                <th>Pc Dueño</th>
-                                <th>Pago</th>
-                                <th>Fecha de trabajo</th>
-                                <th>Fecha y hora de cierre</th>
+                                <th>Fecha/Hora de registro</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -152,17 +161,16 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="jobs-table" class="table-striped table-hover dt-responsive nowrap display compact"
+                    <table id="papers-table" class="table-striped table-hover dt-responsive nowrap display compact"
                         style="width:100%">
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Total</th>
                                 <th>Estado</th>
-                                <th>Pc Nombre</th>
-                                <th>Pc Dueño</th>
-                                <th>Pago</th>
-                                <th>Fecha de trabajo</th>
-                                <th>Fecha y hora de cierre</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -179,7 +187,7 @@
                 <div class="card-header text-center">
                     <i class="fas fa-pen"></i>
                     <strong>
-                        Resumen
+                        Resumen (Jornada ID) <span id="job_id"></span>
                     </strong>
                 </div>
                 <div class="card-body">
@@ -221,7 +229,7 @@
 @stop
 
 {{-- Primero se definen los partials --}}
-{{-- @include('user.jobs.componentes.modal_jobs_partials') --}}
+{{-- @include('user.sells.componentes.modal_sells_partials') --}}
 
 
 {{-- Push extra CSS --}}
@@ -232,5 +240,5 @@
 {{-- Push extra scripts --}}
 
 @push('js')
-    {{-- @include('user.jobs.componentes.js_jobs_partials') --}}
+    @include('user.sells.componentes.js_sells_partials')
 @endpush
